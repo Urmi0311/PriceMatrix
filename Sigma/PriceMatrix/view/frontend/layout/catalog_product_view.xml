@@ -6,5 +6,8 @@
         </referenceContainer>
 
         <move element="price_tiers" destination="product.info.form.content" before="product.info.addtocart"/>
+
+        <referenceContainer name="product.price.final" remove = "true"></referenceContainer>
+
     </body>
 </page>
