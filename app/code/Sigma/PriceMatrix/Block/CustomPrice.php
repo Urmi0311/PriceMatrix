@@ -2,43 +2,55 @@
 
 namespace Sigma\PriceMatrix\Block;
 
-use Magento\Catalog\Model\Product;
+use Magento\Framework\View\Element\Template;
+use Sigma\PriceMatrix\Model\PriceMatrixFactory;
+use Psr\Log\LoggerInterface;
 
-class CustomPrice extends \Magento\Framework\View\Element\Template
+class CustomPrice extends Template
 {
-    protected $productRepository;
-    protected $priceMatrixModel;
+    protected $priceMatrixFactory;
+    protected $logger;
 
     public function __construct(
-        \Magento\Catalog\Block\Product\Context $context,
-        \Magento\Catalog\Model\ProductRepository $productRepository,
-        \Sigma\PriceMatrix\Model\PriceMatrix $priceMatrixModel,
+        Template\Context $context,
+        PriceMatrixFactory $priceMatrixFactory,
+        LoggerInterface $logger,
         array $data = []
     ) {
-        $this->productRepository = $productRepository;
-        $this->priceMatrixModel = $priceMatrixModel;
+        $this->priceMatrixFactory = $priceMatrixFactory;
+        $this->logger = $logger;
         parent::__construct($context, $data);
     }
 
-    public function getCustomPriceForProduct(Product $product)
+    public function getLowestPrice($productId)
     {
-        $productId = $product->getId();
-        $priceMatrix = $this->priceMatrixModel->load($productId, 'product_id');
+        try {
+            $this->logger->info("Lowest Price for Product rrrID");
 
-        if ($priceMatrix) {
-            $qty = 1; // You can adjust this value if needed
-            for ($i = 1; $i <= 5; $i++) {
-                $basePrice = $priceMatrix->getData('display_base_price_' . $i);
-                $tierQty = $priceMatrix->getData('display_qty_' . $i);
+            $priceMatrixModel = $this->priceMatrixFactory->create()->load($productId, 'product_id');
 
-                if ($basePrice && $tierQty) {
-                    if ($qty >= $tierQty) {
-                        return $basePrice;
+            $lowestPrice = null;
+
+            if ($priceMatrixModel) {
+                for ($i = 1; $i <= 5; $i++) {
+                    $basePrice = $priceMatrixModel->getData('display_base_price_' . $i);
+
+                    if ($basePrice) {
+                        if ($lowestPrice === null || $basePrice < $lowestPrice) {
+                            $lowestPrice = $basePrice;
+                        }
                     }
                 }
             }
-        }
 
-        return null;
+            $this->logger->info("Lowest Price for Product ID $productId: $lowestPrice");
+
+            return $lowestPrice;
+        } catch (\Exception $e) {
+            // Log any exceptions
+            $this->logger->error("Error in getting lowest price for Product ID $productId: " . $e->getMessage());
+            return null;
+        }
     }
+
 }
