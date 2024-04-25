@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
-    <event name="checkout_cart_product_add_after">
-        <observer name="sigma_adjust_price" instance="Sigma\PriceMatrix\Observer\AdjustPrice" />
-    </event>
-    <event name="sales_quote_collect_totals_before">
-        <observer name="sigma_pricematrix_adjust_price" instance="Sigma\PriceMatrix\Observer\ReCalculate" />
-    </event>
-</config>
