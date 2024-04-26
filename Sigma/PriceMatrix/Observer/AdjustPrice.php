@@ -13,11 +13,20 @@ class AdjustPrice implements ObserverInterface
      */
     protected $logger;
 
+    /**
+     * AdjustPrice constructor.
+     * @param LoggerInterface $logger
+     */
     public function __construct(LoggerInterface $logger)
     {
         $this->logger = $logger;
     }
 
+    /**
+     * Execute observer
+     *
+     * @param Observer $observer
+     */
     public function execute(Observer $observer)
     {
         $this->logger->info("AdjustPrice observer called.");
@@ -28,14 +37,15 @@ class AdjustPrice implements ObserverInterface
             $qty = $item->getQty();
 
             $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-            $priceMatrixModel = $objectManager->create(\Sigma\PriceMatrix\Model\PriceMatrix::class)->load($product->getId(), 'product_id');
+            $priceMatrixModel = $objectManager->create(\Sigma\PriceMatrix\Model\PriceMatrix::class)
+                ->load($product->getId(), 'product_id');
 
             if ($priceMatrixModel) {
                 $this->logger->info("PriceMatrixModel loaded successfully.");
 
                 $customPrice = null;
 
-                for ($i = 1; $i <= 5; $i++) {
+                for ($i = 1; $i <= 10; $i++) {
                     $basePrice = $priceMatrixModel->getData('display_base_price_' . $i);
                     $tierQty = $priceMatrixModel->getData('display_qty_' . $i);
 

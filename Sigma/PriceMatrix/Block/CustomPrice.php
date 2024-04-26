@@ -8,9 +8,23 @@ use Psr\Log\LoggerInterface;
 
 class CustomPrice extends Template
 {
+    /**
+     * @var PriceMatrixFactory
+     */
     protected $priceMatrixFactory;
+
+    /**
+     * @var LoggerInterface
+     */
     protected $logger;
 
+    /**
+     * CustomPrice constructor.
+     * @param Template\Context $context
+     * @param PriceMatrixFactory $priceMatrixFactory
+     * @param LoggerInterface $logger
+     * @param array $data
+     */
     public function __construct(
         Template\Context $context,
         PriceMatrixFactory $priceMatrixFactory,
@@ -22,17 +36,23 @@ class CustomPrice extends Template
         parent::__construct($context, $data);
     }
 
+    /**
+     * Get the lowest price for the product.
+     *
+     * @param int $productId
+     * @return float|null
+     */
     public function getLowestPrice($productId)
     {
         try {
-            $this->logger->info("Lowest Price for Product rrrID");
+            $this->logger->info("Lowest Price for Product ID: $productId");
 
             $priceMatrixModel = $this->priceMatrixFactory->create()->load($productId, 'product_id');
 
             $lowestPrice = null;
 
             if ($priceMatrixModel) {
-                for ($i = 1; $i <= 5; $i++) {
+                for ($i = 1; $i <= 10; $i++) {
                     $basePrice = $priceMatrixModel->getData('display_base_price_' . $i);
 
                     if ($basePrice) {
@@ -52,5 +72,4 @@ class CustomPrice extends Template
             return null;
         }
     }
-
 }

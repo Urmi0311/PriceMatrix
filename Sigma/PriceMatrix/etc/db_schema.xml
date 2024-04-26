@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="sigma_price_matrix" resource="default" engine="innodb" comment="Sigma Price Matrix Product Table">
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
+        <column xsi:type="int" name="product_id" padding="10" unsigned="true" nullable="false" default="0" comment="Product ID"/>
+        <column xsi:type="decimal" name="display_base_price_1" scale="2" precision="12" nullable="false" default="0.00" comment="Display Base Price 1"/>
+        <column xsi:type="decimal" name="display_base_price_2" scale="2" precision="12" nullable="false" default="0.00" comment="Display Base Price 2"/>
+        <column xsi:type="decimal" name="display_base_price_3" scale="2" precision="12" nullable="false" default="0.00" comment="Display Base Price 3"/>
+        <column xsi:type="decimal" name="display_base_price_4" scale="2" precision="12" nullable="false" default="0.00" comment="Display Base Price 4"/>
+        <column xsi:type="decimal" name="display_base_price_5" scale="2" precision="12" nullable="false" default="0.00" comment="Display Base Price 5"/>
+        <column xsi:type="decimal" name="display_base_price_6" scale="2" precision="12" nullable="false" default="0.00" comment="Display Base Price 6"/>
+        <column xsi:type="decimal" name="display_base_price_7" scale="2" precision="12" nullable="false" default="0.00" comment="Display Base Price 7"/>
+        <column xsi:type="decimal" name="display_base_price_8" scale="2" precision="12" nullable="false" default="0.00" comment="Display Base Price 8"/>
+        <column xsi:type="decimal" name="display_base_price_9" scale="2" precision="12" nullable="false" default="0.00" comment="Display Base Price 9"/>
+        <column xsi:type="decimal" name="display_base_price_10" scale="2" precision="12" nullable="false" default="0.00" comment="Display Base Price 10"/>
+        <column xsi:type="int" name="display_qty_1" padding="10" nullable="false" default="0" comment="Display Qty 1"/>
+        <column xsi:type="int" name="display_qty_2" padding="10" nullable="false" default="0" comment="Display Qty 2"/>
+        <column xsi:type="int" name="display_qty_3" padding="10" nullable="false" default="0" comment="Display Qty 3"/>
+        <column xsi:type="int" name="display_qty_4" padding="10" nullable="false" default="0" comment="Display Qty 4"/>
+        <column xsi:type="int" name="display_qty_5" padding="10" nullable="false" default="0" comment="Display Qty 5"/>
+        <column xsi:type="int" name="display_qty_6" padding="10" nullable="false" default="0" comment="Display Qty 6"/>
+        <column xsi:type="int" name="display_qty_7" padding="10" nullable="false" default="0" comment="Display Qty 7"/>
+        <column xsi:type="int" name="display_qty_8" padding="10" nullable="false" default="0" comment="Display Qty 8"/>
+        <column xsi:type="int" name="display_qty_9" padding="10" nullable="false" default="0" comment="Display Qty 9"/>
+        <column xsi:type="int" name="display_qty_10" padding="10" nullable="false" default="0" comment="Display Qty 10"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+    </table>
+</schema>

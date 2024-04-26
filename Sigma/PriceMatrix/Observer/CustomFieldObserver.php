@@ -11,39 +11,63 @@ use Psr\Log\LoggerInterface;
 
 class CustomFieldObserver implements ObserverInterface
 {
+    /**
+     * @var ProductResource
+     */
     protected $productResource;
+
+    /**
+     * @var ProductModel
+     */
     protected $productModel;
+
+    /**
+     * @var RequestInterface
+     */
     protected $request;
+
+    /**
+     * @var LoggerInterface
+     */
     protected $logger;
 
+    /**
+     * CustomFieldObserver constructor.
+     *
+     * @param ProductResource $productResource
+     * @param ProductModel $productModel
+     * @param RequestInterface $request
+     * @param LoggerInterface $logger
+     */
     public function __construct(
         ProductResource $productResource,
         ProductModel $productModel,
         RequestInterface $request,
         LoggerInterface $logger
-    )
-    {
+    ) {
         $this->productResource = $productResource;
         $this->productModel = $productModel;
         $this->request = $request;
         $this->logger = $logger;
     }
 
+    /**
+     * Execute observer
+     *
+     * @param Observer $observer
+     */
     public function execute(Observer $observer)
     {
         $product = $observer->getProduct();
         $productId = $product->getId();
-
-        $this->logger->info("heyy " . print_r($productId, true));
-
         $postData = $this->request->getPostValue();
 
-        $this->logger->info("heyy " . print_r($postData, true));
-
         if ($postData) {
-            for ($i = 1; $i <= 5; $i++) {
-                if (isset($postData['product']['custom_fieldset']['base_price_container']['display_base_price_' . $i])) {
-                    $displayBasePrice = $postData['product']['custom_fieldset']['base_price_container']['display_base_price_' . $i];
+            for ($i = 1; $i <= 10; $i++) {
+                if (isset($postData['product']['custom_fieldset']['base_price_container']
+                    ['display_base_price_' . $i])) {
+                    $displayBasePrice = $postData['product']['custom_fieldset']
+                    ['base_price_container']['display_base_price_' . $i];
                     $displayQty = $postData['product']['custom_fieldset'] ['qty_container']['display_qty_' . $i];
 
                     $this->logger->info("CustomFieldObserver: Product ID - " . $productId);
@@ -67,5 +91,4 @@ class CustomFieldObserver implements ObserverInterface
             }
         }
     }
-
 }

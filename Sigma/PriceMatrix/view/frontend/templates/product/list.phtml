@@ -20,6 +20,10 @@ use Magento\Framework\App\Action\Action;
 $lowestPriceBlock = $block->getLayout()->createBlock(\Sigma\PriceMatrix\Block\CustomPrice::class);
 ?>
 
+
+
+
+
 <?php
 $_productCollection = $block->getLoadedProductCollection();
 /** @var \Magento\Catalog\Helper\Output $_helper */
@@ -54,17 +58,24 @@ $_helper = $block->getData('outputHelper');
     $viewMode ?>">
         <ol class="products list items product-items">
             <?php /** @var $_product \Magento\Catalog\Model\Product */ ?>
-            <?php foreach ($_productCollection as $_product): ?>
-                <?php
-                // Get the lowest price for each product
+            <?php
+            foreach ($_productCollection as $_product):
                 $lowestPrice = $lowestPriceBlock->getLowestPrice($_product->getId());
+
+                $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+                $priceMatrixModel = $objectManager->create(\Sigma\PriceMatrix\Model\PriceMatrix::class)
+                    ->load($_product->getId(), 'product_id');
+
+                $isPriceMatrixAvailable = $priceMatrixModel && $priceMatrixModel->getId();
                 ?>
+
+
                 <li class="item product product-item">
                     <div class="product-item-info"
                          id="product-item-info_<?= /* @noEscape */
-                         $_product->getId() ?>"
+                            $_product->getId() ?>"
                          data-container="product-<?= /* @noEscape */
-                         $viewMode ?>">
+                            $viewMode ?>">
                         <?php
                         $productImage = $block->getImage($_product, $imageDisplayArea);
                         if ($pos != null) {
@@ -72,7 +83,8 @@ $_helper = $block->getData('outputHelper');
                                 . 'top:' . $productImage->getHeight() . 'px;';
                         }
                         ?>
-                        <?php // Product Image ?>
+                        <?php // Product Image
+                        ?>
                         <a href="<?= $escaper->escapeUrl($_product->getProductUrl()) ?>"
                            class="product photo product-item-photo"
                            tabindex="-1">
@@ -107,7 +119,8 @@ $_helper = $block->getData('outputHelper');
                                                   data-product-sku="<?= $escaper->escapeHtml($_product->getSku()) ?>"
                                                   action="<?= $escaper->escapeUrl($postParams['action']) ?>"
                                                   method="post">
-                                                <?php $options = $block->getData('viewModel')->getOptionsData($_product); ?>
+                                                <?php $options = $block->getData('viewModel')
+                                                    ->getOptionsData($_product); ?>
                                                 <?php foreach ($options as $optionItem): ?>
                                                     <input type="hidden"
                                                            name="<?= $escaper->escapeHtml($optionItem['name']) ?>"
@@ -116,21 +129,29 @@ $_helper = $block->getData('outputHelper');
                                                 <input type="hidden"
                                                        name="product"
                                                        value="<?= /* @noEscape */
-                                                       $postParams['data']['product'] ?>">
+                                                        $postParams['data']['product'] ?>">
                                                 <input type="hidden"
                                                        name="<?= /* @noEscape */
-                                                       Action::PARAM_NAME_URL_ENCODED ?>"
+                                                        Action::PARAM_NAME_URL_ENCODED ?>"
                                                        value="<?=
                                                        /* @noEscape */
-                                                       $postParams['data'][Action::PARAM_NAME_URL_ENCODED]
-                                                       ?>">
+                                                        $postParams['data'][Action::PARAM_NAME_URL_ENCODED]
+                                                        ?>">
                                                 <?= $block->getBlockHtml('formkey') ?>
-                                                <button type="submit"
-                                                        title="<?= $escaper->escapeHtmlAttr(__('Add to Cart')) ?>"
-                                                        class="action tocart primary"
-                                                        disabled>
+                                                <?php if ($isPriceMatrixAvailable): ?>
+                                                    <button type="submit" title="
+                                                    <?= $escaper->escapeHtmlAttr(__('Add to Cart')) ?>"
+                                                            class="action tocart primary"
                                                     <span><?= $escaper->escapeHtml(__('Add to Cart')) ?></span>
-                                                </button>
+                                                    </button>
+                                                <?php else: ?>
+                                                    <button type="button" class="action tocart primary" disabled>
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Add to Cart')) ?>
+                                                        </span>
+                                                    </button>
+                                                <?php endif; ?>
+
                                             </form>
                                         <?php else: ?>
                                             <?php if ($_product->isAvailable()): ?>
@@ -170,7 +191,7 @@ $_helper = $block->getData('outputHelper');
                                         ) ?>
                                         <a href="<?= $escaper->escapeUrl($_product->getProductUrl()) ?>"
                                            title="<?= /* @noEscape */
-                                           $_productNameStripped ?>"
+                                            $_productNameStripped ?>"
                                            class="action more"><?= $escaper->escapeHtml(__('Learn More')) ?></a>
                                     </div>
                                 <?php endif; ?>
@@ -198,5 +219,7 @@ $_helper = $block->getData('outputHelper');
         }
     }
 
+
     </script>
+
 <?php endif; ?>
