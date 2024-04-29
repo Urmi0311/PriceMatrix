@@ -1,9 +1,0 @@
-.small-fieldset-urmi {
-    width: 45%;
-    display: inline-block;
-}
-
-.custom-fieldset .field {
-    width: calc(50% - 10px);
-    float: left;
-}

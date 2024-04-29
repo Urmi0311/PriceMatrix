@@ -1,0 +1,9 @@
+.admin__field-wide {
+    float: left;
+}
+
+
+.admin__field-wide .fieldset-wrapper-title{
+    display: flex;
+    justify-content: center;
+}

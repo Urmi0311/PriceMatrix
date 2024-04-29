@@ -30,7 +30,8 @@ class CustomPrice extends Template
         PriceMatrixFactory $priceMatrixFactory,
         LoggerInterface $logger,
         array $data = []
-    ) {
+    )
+    {
         $this->priceMatrixFactory = $priceMatrixFactory;
         $this->logger = $logger;
         parent::__construct($context, $data);
@@ -38,6 +39,12 @@ class CustomPrice extends Template
 
     /**
      * Get the lowest price for the product.
+     *
+     * @param int $productId
+     * @return float|null
+     */
+    /**
+     * Get the lowest price for the product based on the checked checkboxes.
      *
      * @param int $productId
      * @return float|null
@@ -54,8 +61,9 @@ class CustomPrice extends Template
             if ($priceMatrixModel) {
                 for ($i = 1; $i <= 10; $i++) {
                     $basePrice = $priceMatrixModel->getData('display_base_price_' . $i);
+                    $isChecked = $priceMatrixModel->getData('checkbox_' . $i);
 
-                    if ($basePrice) {
+                    if ($basePrice && $isChecked) {
                         if ($lowestPrice === null || $basePrice < $lowestPrice) {
                             $lowestPrice = $basePrice;
                         }
@@ -67,7 +75,6 @@ class CustomPrice extends Template
 
             return $lowestPrice;
         } catch (\Exception $e) {
-
             $this->logger->error("Error in getting lowest price for Product ID $productId: " . $e->getMessage());
             return null;
         }

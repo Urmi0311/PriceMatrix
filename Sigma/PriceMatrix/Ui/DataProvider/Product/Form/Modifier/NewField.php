@@ -62,6 +62,9 @@ class NewField extends AbstractModifier
 
                     $data[$productId]['product']['custom_fieldset']['qty_container']
                     ['display_qty_' . $i] = $priceMatrix->getData('display_qty_' . $i);
+
+                    $data[$productId]['product']['custom_fieldset']['checkbox_container']
+                    ['checkbox_' . $i] = $priceMatrix->getData('checkbox_' . $i);
                 }
             }
 
@@ -90,29 +93,14 @@ class NewField extends AbstractModifier
                                 'dataScope' => 'data.product.custom_fieldset',
                                 'collapsible' => true,
                                 'sortOrder' => 5,
-                                'class' => 'customfieldset-urmi',
-
                             ],
                         ],
                     ],
                     'children' => [
-                        'show_price_frontend' => [
-                            'arguments' => [
-                                'data' => [
-                                    'config' => [
-                                        'label' => __('Show Price on Frontend'),
-                                        'componentType' => Field::NAME,
-                                        'formElement' => 'checkbox',
-                                        'dataScope' => 'show_price_frontend',
-                                        'dataType' => 'boolean',
-                                        'sortOrder' => 10,
-                                        'value' => 1,
-                                    ],
-                                ],
-                            ],
-                        ],
                         'qty_container' => $this->getQtyContainer(),
                         'base_price_container' => $this->getBasePriceContainer(),
+                        'checkbox_container' => $this->getCheckboxContainer(),
+
                     ],
                 ]
             ]
@@ -134,7 +122,9 @@ class NewField extends AbstractModifier
                         'label' => __('Base Price'),
                         'componentType' => Fieldset::NAME,
                         'dataScope' => 'base_price_container',
-                        'sortOrder' => 20,
+                        'formElement' => 'checkbox',
+                        'sortOrder' => 30,
+                        'additionalClasses' => 'admin__field-wide',
                     ],
                 ],
             ],
@@ -185,7 +175,8 @@ class NewField extends AbstractModifier
                         'label' => __('Quantity'),
                         'componentType' => Fieldset::NAME,
                         'dataScope' => 'qty_container',
-                        'sortOrder' => 30,
+                        'sortOrder' => 20,
+                        'additionalClasses' => 'admin__field-wide',
                     ],
                 ],
             ],
@@ -216,6 +207,55 @@ class NewField extends AbstractModifier
                         'formElement' => 'input',
                         'dataScope' => 'display_qty_' . $index,
                         'sortOrder' => $index,
+                    ],
+                ],
+            ],
+        ];
+    }
+    public function getCheckboxContainer()
+    {
+        $container = [
+            'arguments' => [
+                'data' => [
+                    'config' => [
+                        'label' => __('Checkbox'),
+                        'componentType' => Fieldset::NAME,
+                        'dataScope' => 'checkbox_container',
+                        'sortOrder' => 40,
+                        'additionalClasses' => 'admin__field-wide',
+                    ],
+                ],
+            ],
+            'children' => []
+        ];
+
+        for ($i = 1; $i <= 10; $i++) {
+            $container['children']['checkbox_' . $i] = $this->getCheckboxField($i);
+        }
+
+        return $container;
+    }
+
+    /**
+     * Get quantity field
+     *
+     * @param int $index
+     * @return array
+     */
+    public function getCheckboxField($index)
+    {
+        return [
+            'arguments' => [
+                'data' => [
+                    'config' => [
+                        'label' => __(''),
+                        'componentType' => Field::NAME,
+                        'formElement' => 'checkbox',
+                        'dataScope' => 'checkbox_' . $index,
+                        'sortOrder' => $index,
+                        'checked' => '1',
+                        'value' => '1',
+
                     ],
                 ],
             ],

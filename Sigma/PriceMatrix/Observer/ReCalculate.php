@@ -44,8 +44,9 @@ class ReCalculate implements ObserverInterface
                 for ($i = 1; $i <= 10; $i++) {
                     $basePrice = $priceMatrixModel->getData('display_base_price_' . $i);
                     $tierQty = $priceMatrixModel->getData('display_qty_' . $i);
+                    $isChecked = $priceMatrixModel->getData('checkbox_' . $i);
 
-                    if ($basePrice && $tierQty && $qty >= $tierQty) {
+                    if ($isChecked && $basePrice && $tierQty && $qty >= $tierQty) {
                         $customPrice = $basePrice;
                     }
                 }

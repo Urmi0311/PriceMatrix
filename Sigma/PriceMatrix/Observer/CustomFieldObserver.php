@@ -70,16 +70,16 @@ class CustomFieldObserver implements ObserverInterface
                     ['base_price_container']['display_base_price_' . $i];
                     $displayQty = $postData['product']['custom_fieldset'] ['qty_container']['display_qty_' . $i];
 
-                    $this->logger->info("CustomFieldObserver: Product ID - " . $productId);
-                    $this->logger->info("CustomFieldObserver: Display Base Price " . $i . " - " . $displayBasePrice);
-                    $this->logger->info("CustomFieldObserver: Display Qty " . $i . " - " . $displayQty);
-
-                    $priceMatrix = $this->productModel->load($productId, 'product_id');
+                    $displayCheckbox = ($postData['product']['custom_fieldset']
+                        ['checkbox_container']['checkbox_' . $i] == 1) ? 1 : 0;
+                    $this->logger->info("Checkbox Value: " . $displayCheckbox);
+                        $priceMatrix = $this->productModel->load($productId, 'product_id');
                     if (!$priceMatrix->getId()) {
                         $priceMatrix->setProductId($productId);
                     }
-                    $priceMatrix->setData('display_base_price_' . $i, $displayBasePrice);
-                    $priceMatrix->setData('display_qty_' . $i, $displayQty);
+                        $priceMatrix->setData('display_base_price_' . $i, $displayBasePrice);
+                        $priceMatrix->setData('display_qty_' . $i, $displayQty);
+                        $priceMatrix->setData('checkbox_' . $i, $displayCheckbox);
 
                     try {
                         $this->productResource->save($priceMatrix);

@@ -48,17 +48,17 @@ class AdjustPrice implements ObserverInterface
                 for ($i = 1; $i <= 10; $i++) {
                     $basePrice = $priceMatrixModel->getData('display_base_price_' . $i);
                     $tierQty = $priceMatrixModel->getData('display_qty_' . $i);
+                    $isChecked = $priceMatrixModel->getData('checkbox_' . $i);
 
-                    $this->logger->info("Tier $i - Qty: $tierQty, Base Price: $basePrice");
+                    $this->logger->info("Tier $i - Qty: $tierQty, Base Price: $basePrice, IsChecked: $isChecked");
 
-                    if ($basePrice && $tierQty) {
-                        if ($qty >= $tierQty) {
-                            $customPrice = $basePrice;
-                        }
+                    if ($isChecked && $basePrice && $tierQty && $qty >= $tierQty) {
+                        $customPrice = $basePrice;
                     }
                 }
 
                 if ($customPrice !== null) {
+                    $this->logger->info("Custom price set: $customPrice");
                     $item->setCustomPrice($customPrice);
                     $item->setOriginalCustomPrice($customPrice);
                     $item->getProduct()->setIsSuperMode(true);

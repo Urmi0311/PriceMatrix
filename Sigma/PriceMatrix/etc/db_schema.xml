@@ -24,6 +24,16 @@
         <column xsi:type="int" name="display_qty_8" padding="10" nullable="false" default="0" comment="Display Qty 8"/>
         <column xsi:type="int" name="display_qty_9" padding="10" nullable="false" default="0" comment="Display Qty 9"/>
         <column xsi:type="int" name="display_qty_10" padding="10" nullable="false" default="0" comment="Display Qty 10"/>
+        <column xsi:type="boolean" name="checkbox_1" nullable="false" default="0" comment="Checkbox Value 1"/>
+        <column xsi:type="boolean" name="checkbox_2" nullable="false" default="0" comment="Checkbox Value 2"/>
+        <column xsi:type="boolean" name="checkbox_3" nullable="false" default="0" comment="Checkbox Value 3"/>
+        <column xsi:type="boolean" name="checkbox_4" nullable="false" default="0" comment="Checkbox Value 4"/>
+        <column xsi:type="boolean" name="checkbox_5" nullable="false" default="0" comment="Checkbox Value 5"/>
+        <column xsi:type="boolean" name="checkbox_6" nullable="false" default="0" comment="Checkbox Value 6"/>
+        <column xsi:type="boolean" name="checkbox_7" nullable="false" default="0" comment="Checkbox Value 7"/>
+        <column xsi:type="boolean" name="checkbox_8" nullable="false" default="0" comment="Checkbox Value 8"/>
+        <column xsi:type="boolean" name="checkbox_9" nullable="false" default="0" comment="Checkbox Value 9"/>
+        <column xsi:type="boolean" name="checkbox_10" nullable="false" default="0" comment="Checkbox Value 10"/>
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="entity_id"/>
         </constraint>

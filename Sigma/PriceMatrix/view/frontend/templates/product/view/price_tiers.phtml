@@ -3,14 +3,16 @@ $priceMatrixModel = $block->getPriceMatrixModel();
 
 $priceTiers = [];
 for ($i = 1; $i <= 10; $i++) {
-    $basePrice = $priceMatrixModel->getData('display_base_price_' . $i);
-    $qty = $priceMatrixModel->getData('display_qty_' . $i);
+    if ($priceMatrixModel->getData('checkbox_' . $i) == 1) {
+        $basePrice = $priceMatrixModel->getData('display_base_price_' . $i);
+        $qty = $priceMatrixModel->getData('display_qty_' . $i);
 
-    if ($basePrice && $qty) {
-        $priceTiers[] = [
-            'qty' => $qty,
-            'price' => $basePrice,
-        ];
+        if ($basePrice && $qty) {
+            $priceTiers[] = [
+                'qty' => $qty,
+                'price' => $basePrice,
+            ];
+        }
     }
 }
 ?>

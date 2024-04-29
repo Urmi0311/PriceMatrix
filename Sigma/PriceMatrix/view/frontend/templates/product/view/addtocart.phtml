@@ -35,15 +35,11 @@ $isPriceMatrixAvailable = $priceMatrixModel && $priceMatrixModel->getId();
                 </div>
             <?php endif; ?>
             <div class="actions">
-                <?php if ($isPriceMatrixAvailable): ?>
+                <?php if ($isPriceMatrixAvailable):?>
                     <button type="submit"
                             title="<?= $block->escapeHtmlAttr($buttonTitle) ?>"
                             class="action primary tocart"
                             id="product-addtocart-button">
-                        <span><?= $block->escapeHtml($buttonTitle) ?></span>
-                    </button>
-                <?php else: ?>
-                    <button type="button" class="action primary tocart" id="product-addtocart-button" disabled>
                         <span><?= $block->escapeHtml($buttonTitle) ?></span>
                     </button>
                 <?php endif; ?>
