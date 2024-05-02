@@ -37,6 +37,11 @@ class ReCalculate implements ObserverInterface
             $product = $item->getProduct();
             $qty = $item->getQty();
 
+            $childProduct = $item->getOptionByCode('simple_product');
+            if ($childProduct) {
+                $product = $childProduct->getProduct();
+            }
+
             $priceMatrixModel = $this->priceMatrixFactory->create()->load($product->getId(), 'product_id');
 
             if ($priceMatrixModel->getId()) {

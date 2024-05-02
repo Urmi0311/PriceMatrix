@@ -18,30 +18,33 @@ for ($i = 1; $i <= 10; $i++) {
 ?>
 
 <?php if (!empty($priceTiers)): ?>
-    <div class="price-tiers">
-        <table>
-            <thead>
-            <tr>
-                <th>Quantity</th>
-                <th>Pricing</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php foreach ($priceTiers as $key => $tier): ?>
-                <?php if (isset($priceTiers[$key + 1])): ?>
-                    <tr>
-                        <td><?= $block->escapeHtml($tier['qty']); ?>
-                            - <?= $block->escapeHtml($priceTiers[$key + 1]['qty'] - 1); ?> pcs</td>
-                        <td>$<?= $block->escapeHtml(number_format($tier['price'], 2)); ?> each</td>
-                    </tr>
-                <?php else: ?>
-                    <tr>
-                        <td><?= $block->escapeHtml($tier['qty']); ?>+ pcs</td>
-                        <td>$<?= $block->escapeHtml(number_format($tier['price'], 2)); ?> each</td>
-                    </tr>
-                <?php endif; ?>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
+    <div id="price_tiers_container">
+        <div class="price-tiers">
+            <table>
+                <thead>
+                <tr>
+                    <th>Quantity</th>
+                    <th>Pricing</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($priceTiers as $key => $tier): ?>
+                    <?php if (isset($priceTiers[$key + 1])): ?>
+                        <tr>
+                            <td><?= $block->escapeHtml($tier['qty']); ?>
+                                - <?= $block->escapeHtml($priceTiers[$key + 1]['qty'] - 1); ?> pcs
+                            </td>
+                            <td>$<?= $block->escapeHtml(number_format($tier['price'], 2)); ?> each</td>
+                        </tr>
+                    <?php else: ?>
+                        <tr>
+                            <td><?= $block->escapeHtml($tier['qty']); ?>+ pcs</td>
+                            <td>$<?= $block->escapeHtml(number_format($tier['price'], 2)); ?> each</td>
+                        </tr>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 <?php endif; ?>

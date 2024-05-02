@@ -30,8 +30,7 @@ class CustomPrice extends Template
         PriceMatrixFactory $priceMatrixFactory,
         LoggerInterface $logger,
         array $data = []
-    )
-    {
+    ) {
         $this->priceMatrixFactory = $priceMatrixFactory;
         $this->logger = $logger;
         parent::__construct($context, $data);
@@ -39,12 +38,6 @@ class CustomPrice extends Template
 
     /**
      * Get the lowest price for the product.
-     *
-     * @param int $productId
-     * @return float|null
-     */
-    /**
-     * Get the lowest price for the product based on the checked checkboxes.
      *
      * @param int $productId
      * @return float|null

@@ -5,6 +5,8 @@ namespace Sigma\PriceMatrix\Block\Product;
 use Magento\Framework\View\Element\Template\Context;
 use Sigma\PriceMatrix\Model\PriceMatrix;
 use Magento\Catalog\Model\ProductRepository;
+use Psr\Log\LoggerInterface;
+
 
 class PriceTiers extends \Magento\Framework\View\Element\Template
 {
@@ -18,6 +20,10 @@ class PriceTiers extends \Magento\Framework\View\Element\Template
      */
     protected $productRepository;
 
+
+    protected $logger;
+
+
     /**
      * PriceTiers constructor.
      * @param Context $context
@@ -29,10 +35,13 @@ class PriceTiers extends \Magento\Framework\View\Element\Template
         Context $context,
         PriceMatrix $priceMatrix,
         ProductRepository $productRepository,
+        LoggerInterface $logger,
         array $data = []
     ) {
         $this->priceMatrix = $priceMatrix;
         $this->productRepository = $productRepository;
+        $this->logger = $logger;
+
         parent::__construct($context, $data);
     }
 
@@ -45,6 +54,8 @@ class PriceTiers extends \Magento\Framework\View\Element\Template
     public function getPriceMatrixModel()
     {
         $productId = $this->getRequest()->getParam('id');
+        $this->logger->info('Received product ID: ' . $productId);
+
         $product = $this->productRepository->getById($productId);
 
         return $this->priceMatrix->load($product->getId(), 'product_id');

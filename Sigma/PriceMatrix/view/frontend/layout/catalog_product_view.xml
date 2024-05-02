@@ -1,10 +1,19 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <script src="Sigma_PriceMatrix::js/custom.js"/>
+    </head>
     <body>
+
         <referenceContainer name="product.info.form.content">
             <block class="Sigma\PriceMatrix\Block\Product\PriceTiers" name="price_tiers" template="Sigma_PriceMatrix::product/view/price_tiers.phtml"/>
         </referenceContainer>
         <move element="price_tiers" destination="product.info.form.content" before="product.info.addtocart"/>
         <referenceContainer name="product.price.final" remove="true"/>
+        <referenceBlock name="product.info.addtocart.additional">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">Sigma_PriceMatrix::product/view/addtocart.phtml</argument>
+            </action>
+        </referenceBlock>
         <referenceBlock name="product.info.addtocart">
             <action method="setTemplate">
                 <argument name="template" xsi:type="string">Sigma_PriceMatrix::product/view/addtocart.phtml</argument>

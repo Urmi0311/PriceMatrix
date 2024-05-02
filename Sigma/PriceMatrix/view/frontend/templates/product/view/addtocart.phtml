@@ -35,7 +35,8 @@ $isPriceMatrixAvailable = $priceMatrixModel && $priceMatrixModel->getId();
                 </div>
             <?php endif; ?>
             <div class="actions">
-                <?php if ($isPriceMatrixAvailable):?>
+                <?php $i = 1;?>
+                <?php if ($isPriceMatrixAvailable && $priceMatrixModel->getData('checkbox_' . $i) == 1):?>
                     <button type="submit"
                             title="<?= $block->escapeHtmlAttr($buttonTitle) ?>"
                             class="action primary tocart"
