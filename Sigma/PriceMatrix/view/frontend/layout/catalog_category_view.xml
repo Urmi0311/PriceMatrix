@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
-<body>
+    <head>
+        <script src="Sigma_PriceMatrix::js/lowestprice.js"/>
+    </head>
+    <body>
     <referenceBlock name="category.products.list">
         <action method="setTemplate">
             <argument name="template" xsi:type="string">Sigma_PriceMatrix::product/list.phtml</argument>

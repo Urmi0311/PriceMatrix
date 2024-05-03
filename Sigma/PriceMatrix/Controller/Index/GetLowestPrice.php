@@ -1,13 +1,12 @@
 <?php
+namespace Sigma\PriceMatrix\Controller\Index;
 
-namespace Sigma\PriceMatrix\Block;
-
-use Magento\Framework\View\Element\Template;
+use Magento\Framework\App\Action\Action;
+use Magento\Framework\App\Action\Context;
 use Sigma\PriceMatrix\Model\PriceMatrixFactory;
 use Psr\Log\LoggerInterface;
-use Magento\Catalog\Model\Product;
 
-class CustomPrice extends Template
+class GetLowestPrice extends Action
 {
     /**
      * @var PriceMatrixFactory
@@ -19,27 +18,36 @@ class CustomPrice extends Template
      */
     protected $logger;
 
-
-    public $product;
-
     /**
-     * CustomPrice constructor.
-     * @param Template\Context $context
+     * GetLowestPrice constructor.
+     * @param Context $context
      * @param PriceMatrixFactory $priceMatrixFactory
      * @param LoggerInterface $logger
-     * @param array $data
      */
     public function __construct(
-        Template\Context $context,
+        Context $context,
         PriceMatrixFactory $priceMatrixFactory,
-        LoggerInterface $logger,
-        Product $product,
-        array $data = []
+        LoggerInterface $logger
     ) {
         $this->priceMatrixFactory = $priceMatrixFactory;
         $this->logger = $logger;
-        $this->product = $product;
-        parent::__construct($context, $data);
+        parent::__construct($context);
+    }
+
+    /**
+     * Execute the controller action to get the lowest price.
+     */
+    public function execute()
+    {
+        $productId = $this->getRequest()->getParam('product_id');
+        $this->logger->info("Request received to get lowest price for Product ID: $productId");
+
+        $lowestPrice = $this->getLowestPrice($productId);
+
+        $this->logger->info("Lowest price for Product ID $productId: $lowestPrice");
+
+        $resultJson = $this->resultFactory->create(\Magento\Framework\Controller\ResultFactory::TYPE_JSON);
+        return $resultJson->setData(['success' => true, 'lowest_price' => $lowestPrice]);
     }
 
     /**
@@ -48,23 +56,12 @@ class CustomPrice extends Template
      * @param int $productId
      * @return float|null
      */
-    public function getLowestPrice($productId)
+    protected function getLowestPrice($productId)
     {
         try {
-            $this->logger->info("Lowest Price for Product ID: $productId");
-
             $priceMatrixModel = $this->priceMatrixFactory->create()->load($productId, 'product_id');
-//
-//            $configurable = $this->product->load($productId);
-//            $children = $configurable
-//                ->getTypeInstance()
-//                ->getUsedProducts($configurable);
-//            foreach ($children as $child) {
-//                $this->logger->info("Child Product ID: " . $child->getId());
-//
-//            }
 
-                $lowestPrice = null;
+            $lowestPrice = null;
 
             if ($priceMatrixModel) {
                 for ($i = 1; $i <= 10; $i++) {
@@ -78,8 +75,6 @@ class CustomPrice extends Template
                     }
                 }
             }
-
-            $this->logger->info("Lowest Price for Product ID $productId: $lowestPrice");
 
             return $lowestPrice;
         } catch (\Exception $e) {

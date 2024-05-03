@@ -101,10 +101,12 @@ $_helper = $block->getData('outputHelper');
                             </strong>
                             <?= $block->getReviewsSummaryHtml($_product, $templateType) ?>
                             <?php if ($lowestPrice !== null): ?>
+                                <div id="lowest_price_container">
                                 <div class="price-box">
                                     <span class="price">
                                         <?= $block->escapeHtml(__('Lowest Price: %1', $lowestPrice)); ?>
                                     </span>
+                                </div>
                                 </div>
                             <?php endif; ?>
 
