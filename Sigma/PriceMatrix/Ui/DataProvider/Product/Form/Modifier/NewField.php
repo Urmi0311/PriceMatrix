@@ -212,6 +212,10 @@ class NewField extends AbstractModifier
             ],
         ];
     }
+
+    /**
+     * Get checkbox field
+     */
     public function getCheckboxContainer()
     {
         $container = [

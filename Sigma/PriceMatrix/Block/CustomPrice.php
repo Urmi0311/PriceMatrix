@@ -19,7 +19,9 @@ class CustomPrice extends Template
      */
     protected $logger;
 
-
+    /**
+     * @var Product
+     */
     public $product;
 
     /**
@@ -27,6 +29,7 @@ class CustomPrice extends Template
      * @param Template\Context $context
      * @param PriceMatrixFactory $priceMatrixFactory
      * @param LoggerInterface $logger
+     * @param Product $product
      * @param array $data
      */
     public function __construct(
@@ -54,16 +57,6 @@ class CustomPrice extends Template
             $this->logger->info("Lowest Price for Product ID: $productId");
 
             $priceMatrixModel = $this->priceMatrixFactory->create()->load($productId, 'product_id');
-//
-//            $configurable = $this->product->load($productId);
-//            $children = $configurable
-//                ->getTypeInstance()
-//                ->getUsedProducts($configurable);
-//            foreach ($children as $child) {
-//                $this->logger->info("Child Product ID: " . $child->getId());
-//
-//            }
-
                 $lowestPrice = null;
 
             if ($priceMatrixModel) {

@@ -7,7 +7,6 @@ use Sigma\PriceMatrix\Model\PriceMatrix;
 use Magento\Catalog\Model\ProductRepository;
 use Psr\Log\LoggerInterface;
 
-
 class PriceTiers extends \Magento\Framework\View\Element\Template
 {
     /**
@@ -20,15 +19,17 @@ class PriceTiers extends \Magento\Framework\View\Element\Template
      */
     protected $productRepository;
 
-
+    /**
+     * @var LoggerInterface\
+     */
     protected $logger;
-
 
     /**
      * PriceTiers constructor.
      * @param Context $context
      * @param PriceMatrix $priceMatrix
      * @param ProductRepository $productRepository
+     * @param Logger $logger
      * @param array $data
      */
     public function __construct(

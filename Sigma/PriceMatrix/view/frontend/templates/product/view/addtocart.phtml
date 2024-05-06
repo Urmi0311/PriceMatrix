@@ -8,12 +8,15 @@
 ?>
 <?php $_product = $block->getProduct(); ?>
 <?php $buttonTitle = __('Add to Cart'); ?>
-<?php
-$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-$priceMatrixModel = $objectManager->create(\Sigma\PriceMatrix\Model\PriceMatrix::class)
-    ->load($_product->getId(), 'product_id');
 
-$isPriceMatrixAvailable = $priceMatrixModel && $priceMatrixModel->getId();
+<?php
+/** @var \Sigma\PriceMatrix\ViewModel\ProductsList $block */
+$viewModel = $block->getData("view_model");
+?>
+<?php
+$isPriceMatrixAvailable = $viewModel->isPriceMatrixAvailable($_product->getId());
+$priceMatrixModel = $viewModel->getPriceMatrixModel();
+
 ?>
 <?php if ($_product->isSaleable() && $isPriceMatrixAvailable):?>
     <div class="box-tocart">

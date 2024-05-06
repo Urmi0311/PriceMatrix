@@ -3,8 +3,8 @@
     <module name="Sigma_PriceMatrix">
         <sequence>
             <module name="Magento_Catalog"/>
+            <module name="Magento_CatalogWidget"/>
         </sequence>
     </module>
 </config>
-
 

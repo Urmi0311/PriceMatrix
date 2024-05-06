@@ -53,6 +53,9 @@ class GetData extends Action
         $this->priceMatrix = $priceMatrix;
     }
 
+    /**
+     *  Execute method for configurable
+     */
     public function execute()
     {
         try {
@@ -74,7 +77,8 @@ class GetData extends Action
             return $resultRaw;
         } catch (\Exception $e) {
             $this->logger->error($e->getMessage());
-            return $this->resultFactory->create(ResultFactory::TYPE_RAW)->setHttpResponseCode(500)->setContents($e->getMessage());
+            return $this->resultFactory->create(ResultFactory::TYPE_RAW)
+                ->setHttpResponseCode(500)->setContents($e->getMessage());
         }
     }
 }

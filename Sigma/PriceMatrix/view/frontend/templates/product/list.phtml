@@ -17,12 +17,9 @@ use Magento\Framework\App\Action\Action;
 ?>
 
 <?php
-$lowestPriceBlock = $block->getLayout()->createBlock(\Sigma\PriceMatrix\Block\CustomPrice::class);
+/** @var \Sigma\PriceMatrix\ViewModel\ProductsList $block */
+$viewModel = $block->getData("view_model");
 ?>
-
-
-
-
 
 <?php
 $_productCollection = $block->getLoadedProductCollection();
@@ -60,13 +57,10 @@ $_helper = $block->getData('outputHelper');
             <?php /** @var $_product \Magento\Catalog\Model\Product */ ?>
             <?php
             foreach ($_productCollection as $_product):
-                $lowestPrice = $lowestPriceBlock->getLowestPrice($_product->getId());
+                $lowestPrice = $viewModel->getLowestPrice($_product->getId());
+                $isPriceMatrixAvailable = $viewModel->isPriceMatrixAvailable($_product->getId());
+                $pricematrixmodel = $viewModel->getPriceMatrixModel();
 
-                $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-                $priceMatrixModel = $objectManager->create(\Sigma\PriceMatrix\Model\PriceMatrix::class)
-                    ->load($_product->getId(), 'product_id');
-
-                $isPriceMatrixAvailable = $priceMatrixModel && $priceMatrixModel->getId();
                 ?>
 
 
@@ -102,11 +96,11 @@ $_helper = $block->getData('outputHelper');
                             <?= $block->getReviewsSummaryHtml($_product, $templateType) ?>
                             <?php if ($lowestPrice !== null): ?>
                                 <div id="lowest_price_container">
-                                <div class="price-box">
+                                    <div class="price-box">
                                     <span class="price">
                                         <?= $block->escapeHtml(__('Lowest Price: %1', $lowestPrice)); ?>
                                     </span>
-                                </div>
+                                    </div>
                                 </div>
                             <?php endif; ?>
 
@@ -121,6 +115,7 @@ $_helper = $block->getData('outputHelper');
                                                   data-product-sku="<?= $escaper->escapeHtml($_product->getSku()) ?>"
                                                   action="<?= $escaper->escapeUrl($postParams['action']) ?>"
                                                   method="post">
+                                                <?php /** @var $_product \Magento\Catalog\Model\Product */ ?>
                                                 <?php $options = $block->getData('viewModel')
                                                     ->getOptionsData($_product); ?>
                                                 <?php foreach ($options as $optionItem): ?>
@@ -141,13 +136,15 @@ $_helper = $block->getData('outputHelper');
                                                         ?>">
                                                 <?= $block->getBlockHtml('formkey') ?>
                                                 <?php $i = 1; // Define $i here ?>
-                                                <?php if ($isPriceMatrixAvailable && $priceMatrixModel->getData('checkbox_' . $i) == 1):?>
+                                                <?php if ($isPriceMatrixAvailable &&
+                                                    $pricematrixmodel->getData('checkbox_' . $i) == 1
+                                                ): ?>
                                                     <button type="submit" title="
                                                     <?= $escaper->escapeHtmlAttr(__('Add to Cart')) ?>"
                                                             class="action tocart primary"
                                                     <span><?= $escaper->escapeHtml(__('Add to Cart')) ?></span>
                                                     </button>
-                                                
+
                                                 <?php endif; ?>
 
                                             </form>
@@ -216,6 +213,7 @@ $_helper = $block->getData('outputHelper');
             }
         }
     }
+
 
 
     </script>
