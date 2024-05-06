@@ -3,6 +3,9 @@ namespace Sigma\PriceMatrix\ViewModel;
 
 use Magento\Framework\View\Element\Block\ArgumentInterface;
 use Sigma\PriceMatrix\Model\PriceMatrix;
+use Psr\Log\LoggerInterface;
+use Sigma\PriceMatrix\Model\PriceMatrixFactory;
+
 
 /**
  * Class ProductList for view model
@@ -10,27 +13,34 @@ use Sigma\PriceMatrix\Model\PriceMatrix;
 class ProductList implements ArgumentInterface
 {
     /**
-     * @var \Sigma\PriceMatrix\Block\CustomPrice
-     */
-    protected $customPriceBlock;
-
-    /**
      * @var PriceMatrix
      */
     protected $priceMatrixModel;
 
+
+
+    protected $logger;
+
+    protected $priceMatrixFactory;
+
+
     /**
      * ProductList constructor.
      *
-     * @param \Sigma\PriceMatrix\Block\CustomPrice $customPriceBlock
      * @param PriceMatrix $priceMatrixModel
      */
     public function __construct(
-        \Sigma\PriceMatrix\Block\CustomPrice $customPriceBlock,
-        PriceMatrix $priceMatrixModel
-    ) {
-        $this->customPriceBlock = $customPriceBlock;
+        PriceMatrixFactory $priceMatrixFactory,
+        PriceMatrix $priceMatrixModel,
+        LoggerInterface $logger
+
+
+    )
+    {
+        $this->priceMatrixFactory = $priceMatrixFactory;
         $this->priceMatrixModel = $priceMatrixModel;
+        $this->logger = $logger;
+
     }
 
     /**
@@ -40,7 +50,32 @@ class ProductList implements ArgumentInterface
      */
     public function getLowestPrice($productId)
     {
-        return $this->customPriceBlock->getLowestPrice($productId);
+        try {
+            $this->logger->info("Lowest Price for Product ID: $productId");
+
+            $priceMatrixModel = $this->priceMatrixFactory->create()->load($productId, 'product_id');
+            $lowestPrice = null;
+
+            if ($priceMatrixModel) {
+                for ($i = 1; $i <= 10; $i++) {
+                    $basePrice = $priceMatrixModel->getData('display_base_price_' . $i);
+                    $isChecked = $priceMatrixModel->getData('checkbox_' . $i);
+
+                    if ($basePrice && $isChecked) {
+                        if ($lowestPrice === null || $basePrice < $lowestPrice) {
+                            $lowestPrice = $basePrice;
+                        }
+                    }
+                }
+            }
+
+            $this->logger->info("Lowest Price for Product ID $productId: $lowestPrice");
+
+            return $lowestPrice;
+        } catch (\Exception $e) {
+            $this->logger->error("Error in getting lowest price for Product ID $productId: " . $e->getMessage());
+            return null;
+        }
     }
 
     /**

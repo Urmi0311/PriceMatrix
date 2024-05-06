@@ -70,7 +70,7 @@ if ($_product !== null) {
             <div class="actions-toolbar">
                 <div class="primary"
                      data-bind="visible: isShowAddToCart">
-                    <?php if ($isPriceMatrixAvailable):?>
+                    <?php if ($isPriceMatrixAvailable): ?>
                         <button type="submit" title="<?= $block->escapeHtml(__('Add to Cart')) ?>"
                                 class="action tocart primary">
                             <span><?= $block->escapeHtml(__('Add to Cart')) ?></span>
@@ -96,7 +96,8 @@ if ($_product !== null) {
     });
 script;
     ?>
-    <?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>
+    <?= /* @noEscape */
+    $secureRenderer->renderTag('script', [], $scriptString, false) ?>
 </div>
 <script type="text/x-magento-init">
 {
@@ -110,4 +111,5 @@ script;
         }
     }
 }
+
 </script>
