@@ -5,14 +5,14 @@
             <argument name="modifiers" xsi:type="array">
                 <item name="customTab" xsi:type="array">
                     <item name="class" xsi:type="string">
-                        Sigma\PriceMatrix\Ui\DataProvider\Product\Form\Modifier\NewField
+                        Sigma\PriceMatrix\Ui\DataProvider\Product\Form\Modifier\PriceMatrixFields
                     </item>
                     <item name="sortOrder" xsi:type="number">70</item>
                 </item>
             </argument>
         </arguments>
     </virtualType>
-    <type name="Sigma\PriceMatrix\Observer\CustomFieldObserver">
+    <type name="Sigma\PriceMatrix\Observer\PriceMatrixSave">
         <arguments>
             <argument name="productRepository" xsi:type="object">Magento\Catalog\Api\ProductRepositoryInterface</argument>
         </arguments>

@@ -20,7 +20,7 @@ class PriceTiers extends \Magento\Framework\View\Element\Template
     protected $productRepository;
 
     /**
-     * @var LoggerInterface\
+     * @var LoggerInterface
      */
     protected $logger;
 
@@ -29,7 +29,7 @@ class PriceTiers extends \Magento\Framework\View\Element\Template
      * @param Context $context
      * @param PriceMatrix $priceMatrix
      * @param ProductRepository $productRepository
-     * @param Logger $logger
+     * @param LoggerInterface $logger
      * @param array $data
      */
     public function __construct(

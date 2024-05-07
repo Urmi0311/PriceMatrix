@@ -1,4 +1,6 @@
 <?php
+
+/** @var  Sigma/PriceMatrix/Block/Product/PriceTiers $block */
 $priceMatrixModel = $block->getPriceMatrixModel();
 
 $priceTiers = [];
@@ -46,5 +48,8 @@ for ($i = 1; $i <= 10; $i++) {
                 </tbody>
             </table>
         </div>
+    </div>
+<?php else: (empty($priceTiers)) ?>
+    <div id="price_tiers_container">
     </div>
 <?php endif; ?>
