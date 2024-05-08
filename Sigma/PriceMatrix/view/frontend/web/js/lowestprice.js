@@ -15,13 +15,18 @@ require(['jquery'], function($) {
                         if (!isNaN(lowestPriceNumber)) {
                             $('#lowest_price_container').html('<div class="price-box"><span class="price">Lowest Price: $' + lowestPriceNumber.toFixed(2) + '</span></div>');
                             $('.tocart.primary').show();
+                            $('.actions-secondary').show();
+
                         } else {
                             $('#lowest_price_container').html('<div class="no-price-data">No lowest price available</div>');
                             $('.tocart.primary').hide();
+                            $('.actions-secondary').hide();
+
                         }
                     } else {
                         $('#lowest_price_container').html('');
                         $('.tocart.primary').hide();
+                        $('.actions-secondary').hide();
                     }
                 },
                 error: function(xhr, status, error) {
