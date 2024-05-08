@@ -28,13 +28,15 @@ console.log(selProId);
     if (Object.keys(priceMatrix).length === 0) {
       html += '<div class="no-price-data"></div>';
       $('.tocart.primary').hide();
+      $('.product-addto-links').hide();
+
     } else {
       html += '<div class="price-tiers">';
       html += '<table>';
       html += '<thead><tr><th>Quantity</th><th>Pricing</th></tr></thead>';
       html += '<tbody>';
       $('.tocart.primary').show();
-
+      $('.product-addto-links').show();
       var priceTiers = [];
       for (var i = 1; i <= 10; i++) {
         if (priceMatrix['checkbox_' + i] == 1) {

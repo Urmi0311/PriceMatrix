@@ -1,0 +1,24 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var $block \Magento\Catalog\Block\Product\View*/
+?>
+<?php
+/** @var \Sigma\PriceMatrix\ViewModel\ProductsList $block */
+$_product = $block->getProduct();
+$viewModel = $block->getData("view_model");
+$isPriceMatrixAvailable = $viewModel->isPriceMatrixAvailable($_product->getId());
+$pricematrixmodel = $viewModel->getPriceMatrixModel();
+?>
+
+<?php $i = 1;  ?>
+<?php if ($isPriceMatrixAvailable &&
+$pricematrixmodel->getData('checkbox_' . $i) == 1
+): ?>
+<div class="product-addto-links" data-role="add-to-links">
+    <?= $block->getChildHtml() ?>
+</div>
+<?php endif; ?>

@@ -56,7 +56,9 @@ class PriceTiers extends \Magento\Framework\View\Element\Template
     {
         $productId = null;
 
-        if ($this->getRequest()->getFullActionName() == 'wishlist_index_configure') {
+        $fullActionName = $this->getRequest()->getFullActionName();
+
+        if ($fullActionName == 'wishlist_index_configure' || $fullActionName == 'checkout_cart_configure') {
             $productId = $this->getRequest()->getParam('product_id');
         } else {
             $productId = $this->getRequest()->getParam('id');

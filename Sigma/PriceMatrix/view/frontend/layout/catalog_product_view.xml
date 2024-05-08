@@ -10,6 +10,13 @@
         </referenceContainer>
         <move element="price_tiers" destination="product.info.form.content" before="product.info.addtocart"/>
         <referenceContainer name="product.price.final" remove="true"/>
+
+        <referenceBlock name="product.info.addto" template="Sigma_PriceMatrix::product/view/addto.phtml">
+            <arguments>
+                <argument name="view_model" xsi:type="object">Sigma\PriceMatrix\ViewModel\ProductList</argument>
+            </arguments>
+        </referenceBlock>
+
         <referenceBlock name="product.info.addtocart.additional">
             <action method="setTemplate">
                 <argument name="template" xsi:type="string">Sigma_PriceMatrix::product/view/addtocart.phtml</argument>
