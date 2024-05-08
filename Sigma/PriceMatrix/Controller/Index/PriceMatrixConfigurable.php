@@ -66,12 +66,6 @@ class PriceMatrixConfigurable extends Action
 
             $priceMatrix = $this->priceMatrix->load($product->getId(), 'product_id');
 
-            if ($priceMatrix && $priceMatrix->getId()) {
-                $this->logger->info('Loaded price matrix model: ' . json_encode($priceMatrix->getData()));
-            } else {
-                $this->logger->info('Price matrix model not available.');
-            }
-
             $resultRaw = $this->resultRawFactory->create();
             $resultRaw->setContents(json_encode(['priceMatrix' => $priceMatrix->getData()]));
             return $resultRaw;

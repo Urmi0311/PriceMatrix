@@ -54,8 +54,13 @@ class PriceTiers extends \Magento\Framework\View\Element\Template
      */
     public function getPriceMatrixModel()
     {
-        $productId = $this->getRequest()->getParam('id');
-        $this->logger->info('Received product ID: ' . $productId);
+        $productId = null;
+
+        if ($this->getRequest()->getFullActionName() == 'wishlist_index_configure') {
+            $productId = $this->getRequest()->getParam('product_id');
+        } else {
+            $productId = $this->getRequest()->getParam('id');
+        }
 
         $product = $this->productRepository->getById($productId);
 

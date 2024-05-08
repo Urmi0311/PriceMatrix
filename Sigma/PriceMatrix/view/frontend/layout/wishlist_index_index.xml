@@ -1,15 +1,10 @@
 <?xml version="1.0"?>
-<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
         <script src="Sigma_PriceMatrix::js/pricematrix.js"/>
     </head>
     <body>
-        <referenceBlock name="product.price.render.wishlist" remove='true'/>
-        <referenceBlock name="product.info.addto">
-            <action method="setTemplate">
-                <argument name="template" xsi:type="string">Sigma_PriceMatrix::product/view/price_tiers.phtml</argument>
-            </action>
-        </referenceBlock>
+        <referenceBlock name="product.price.render.wishlist" remove='true' />
+
     </body>
 </page>

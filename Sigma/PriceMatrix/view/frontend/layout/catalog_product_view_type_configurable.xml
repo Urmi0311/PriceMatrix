@@ -9,5 +9,6 @@
                    as="price_tiers.button"
                    template="Sigma_PriceMatrix::product/view/price_tiers.phtml"/>
         </referenceContainer>
+
     </body>
 </page>

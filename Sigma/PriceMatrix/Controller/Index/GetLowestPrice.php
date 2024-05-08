@@ -40,7 +40,7 @@ class GetLowestPrice extends Action
     public function execute()
     {
         $productId = $this->getRequest()->getParam('product_id');
-        $this->logger->info("Request received to get lowest price for Product ID: $productId");
+
         $lowestPrice = $this->lowestPriceHelper->getLowPrice($productId);
 
         $this->logger->info("Lowest price for Product ID $productId: $lowestPrice");
